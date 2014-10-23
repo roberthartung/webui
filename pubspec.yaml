@@ -1,0 +1,4 @@
+name: webui
+description: A pub package
+dependencies:
+  polymer: any

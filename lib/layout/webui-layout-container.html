@@ -1,0 +1,30 @@
+<link rel="import" href="../../../packages/polymer/polymer.html">
+
+<polymer-element name="webui-layout-container" attributes="horizontal vertical">
+  <template>
+    <style>
+      :host {
+        display: flex;
+        display: -webkit-flex;
+        flex-grow: 1;
+      }
+    </style>
+    <template if="{{horizontal}}">
+    <style>
+      :host {
+        flex-direction: column;
+      }
+    </style>
+    </template>
+    <template if="{{vertical}}">
+    <style>
+      :host {
+        flex-direction: row;
+      }
+    </style>
+    </template>
+    <content>
+    </content>
+  </template>
+  <script type="application/dart" src="webui-layout-container.dart"></script>
+</polymer-element>
