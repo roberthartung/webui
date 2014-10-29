@@ -47,6 +47,11 @@ class WebUiTabs extends PolymerElement {
   }
   
   @override
+  void attached() {
+    super.attached();
+  }
+  
+  @override
   void domReady() {
     super.domReady();
     

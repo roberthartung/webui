@@ -22,6 +22,9 @@
         </template>
       </webui-tabs>
     </template>
+    <template if="{{!tabbed}}">
+      <content></content>
+    </template>
   </template>
   <script type="application/dart" src="webui-dock.dart"></script>
 </polymer-element>

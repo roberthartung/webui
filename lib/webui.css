@@ -14,6 +14,13 @@ webui-layout /deep/ .flex-static {
   flex-shrink: 0;
 }
 
+webui-layout /deep/ ul.list {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+  list-style-image: none;
+}
+
 /*
 webui-layout /deep/ *[horizontal] {
   flex-direction: column;
