@@ -43,6 +43,7 @@ class WebUiTabs extends PolymerElement {
     activeItem = item;
     activeItem.active = true;
     _onActiveTabChangedController.add(activeItem);
+    fire('active-tab-changed', detail: {'item': activeItem});
   }
   
   @override
