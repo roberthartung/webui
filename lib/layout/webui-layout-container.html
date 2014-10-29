@@ -1,30 +1,27 @@
+<!DOCTYPE html>
 <link rel="import" href="../../../packages/polymer/polymer.html">
 
-<polymer-element name="webui-layout-container" attributes="horizontal vertical">
+<polymer-element name="webui-layout-container" attributes="horizontal vertical" class="flex flex-dynamic">
   <template>
-    <style>
-      :host {
-        display: flex;
-        display: -webkit-flex;
-        flex-grow: 1;
-      }
-    </style>
-    <template if="{{horizontal}}">
-    <style>
-      :host {
-        flex-direction: column;
-      }
-    </style>
-    </template>
-    <template if="{{vertical}}">
-    <style>
-      :host {
-        flex-direction: row;
-      }
-    </style>
-    </template>
-    <content>
-    </content>
+    <!--<template if="{{horizontal}}">-->
+      <style type="text/css">
+        :host([horizontal]) {
+          flex-direction: column;
+          -webkit-flex-direction: column;
+        }
+      </style>
+    <!--</template>-->
+    
+    <!--<template if="{{vertical}}">-->
+      <style type="text/css">
+        :host([vertical]) {
+          flex-direction: row;
+          -webkit-flex-direction: row;
+        }
+      </style>
+    <!--</template>-->
+    
+    <content></content>
   </template>
   <script type="application/dart" src="webui-layout-container.dart"></script>
 </polymer-element>

@@ -2,3 +2,6 @@ name: webui
 description: A pub package
 dependencies:
   polymer: any
+  template_binding: any
+transformers:
+- polymer

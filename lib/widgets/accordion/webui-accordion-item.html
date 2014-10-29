@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<link rel="import" href="../../../../packages/polymer/polymer.html">
+
+<polymer-element name="webui-accordion-item" attributes="label">
+  <template>
+    <style>
+      :host {
+        display: block;
+        flex-grow: 1;
+      }
+    </style>
+    <div id="label">{{label}}</div>
+    <content></content>
+  </template>
+  <script type="application/dart" src="webui-accordion-item.dart"></script>
+</polymer-element>

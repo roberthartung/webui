@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<link rel="import" href="../../../../packages/polymer/polymer.html">
+
+<polymer-element name="webui-tabs-item" attributes="label active">
+  <template>
+    <style>
+      :host {
+        /*
+        display: flex;
+        display: -webkit-flex;
+        */
+        display: none;
+        flex-grow: 1;
+        position: relative;
+        overflow: auto;
+      }
+      
+      :host([active]) {
+        display: flex;
+        display: -webkit-flex;
+      }
+    </style>
+    <template if="{{ active }}">
+    <style>
+      :host {
+        display: flex;
+        display: -webkit-flex;
+      }
+    </style>
+    </template>
+    <template if="{{ !active }}">
+    <style>
+      :host {
+        display: none;
+      }
+    </style>
+    </template>
+    <content></content>
+  </template>
+  <script type="application/dart" src="webui-tabs-item.dart"></script>
+</polymer-element>

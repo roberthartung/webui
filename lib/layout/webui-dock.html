@@ -1,14 +1,27 @@
+<!DOCTYPE html>
 <link rel="import" href="../../../packages/polymer/polymer.html">
+<!--<link rel="import" href="webui-text.html">-->
+<link rel="import" href="../widgets/tabs.html">
 
-<polymer-element name="webui-dock">
+<polymer-element name="webui-dock" attributes="tabbed" class="flex flex-dynamic">
   <template>
     <style>
-      :host {
-        flex-grow: 1;
+      :host(.tabbed) {
+        flex-direction: column;
+        border: 1px solid #000;
       }
     </style>
-    <content>
-    </content>
+
+    <!-- tabbed view -->
+    <template if="{{tabbed}}">
+      <webui-tabs id="tabs">
+        <template repeat="{{ widget in widgets | enumerate }}">
+          <webui-tabs-item label="{{ widget.value.label }}">
+            <content select=".nth-child-{{widget.index+1}}"></content>
+          </webui-tabs-item>
+        </template>
+      </webui-tabs>
+    </template>
   </template>
   <script type="application/dart" src="webui-dock.dart"></script>
 </polymer-element>

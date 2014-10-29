@@ -1,0 +1,39 @@
+webui-layout /deep/ .flex {
+  display: flex;
+  display: -webkit-flex;
+  display: -moz-flex;
+}
+
+webui-layout /deep/ .flex-dynamic {
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+
+webui-layout /deep/ .flex-static {
+  flex-grow: 0;
+  flex-shrink: 0;
+}
+
+/*
+webui-layout /deep/ *[horizontal] {
+  flex-direction: column;
+  -webkit-flex-direction: column;
+}
+
+webui-layout /deep/ *[horizontal] {
+  flex-direction: column;
+  -webkit-flex-direction: column;
+}
+*/
+
+webui-layout /deep/ webui-menu > webui-menu-item {
+  float: left;
+}
+
+webui-layout /deep/ webui-menu > webui-menu-item > webui-menu-item {
+  display: none;
+}
+
+webui-layout /deep/ webui-menu > webui-menu-item:hover > webui-menu-item {
+  display: block;
+}

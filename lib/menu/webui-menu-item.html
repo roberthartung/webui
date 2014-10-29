@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<link rel="import" href="../../../packages/polymer/polymer.html">
+
+<polymer-element name="webui-menu-item" attributes="text">
+  <template>
+    <style>
+      :host {
+        display: inline-block;
+        flex-grow: 0;
+        flex-shrink: 0;
+      }
+    </style>
+    <a href="#do">{{text}}</a>
+    <div style="position: absolute;">
+      <content></content>
+    </div>
+  </template>
+  <script type="application/dart" src="webui-menu-item.dart"></script>
+</polymer-element>
