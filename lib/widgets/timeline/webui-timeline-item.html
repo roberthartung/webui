@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<link rel="import" href="../../../../packages/polymer/polymer.html">
+
+<polymer-element name="webui-timeline-item">
+  <template>
+    <style>
+      :host {
+        display: block;
+        position: relative;
+        flex-grow: 1;
+      }
+    </style>
+    
+    <content>
+    </content>
+    <ul class="list">
+    <template repeat="{{ val in properties.values }}">
+      <li>{{ val }}</li>
+    </template>
+    </ul>
+  </template>
+  <script type="application/dart" src="webui-timeline-item.dart"></script>
+</polymer-element>

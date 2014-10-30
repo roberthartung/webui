@@ -1,16 +1,59 @@
 <!DOCTYPE html>
 <link rel="import" href="../../../../packages/polymer/polymer.html">
 
-<polymer-element name="webui-timeline">
+<polymer-element name="webui-timeline" class="flex">
   <template>
     <style>
       :host {
-        display: block;
         flex-grow: 1;
+        flex-direction: column;
+      }
+      
+      #timeline {
+        flex-grow: 1;
+        flex-direction: row;
+      }
+      
+      #list {
+        width: 200px;
+        flex-grow: 0;
+        flex-shrink: 0;
+        overflow: scroll;
+      }
+      
+      #items {
+        flex-grow: 1;
+        overflow: scroll;
+      }
+      
+      #controls {
+        
       }
     </style>
-    <content>
-    </content>
+    <div id="controls">
+      <input type="range" min="1" max="100" value="{{ zoom }}">
+    </div>
+    <div id="timeline" class="flex">
+      <div id="list">
+        <ul class="list">
+          <template repeat="{{ item in children | filterChildren }}">
+          <li>
+            {{ item.name }}
+            <ul class="list">
+            <template repeat="{{ val in item.properties.keys }}">
+              <li>{{ val }}</li>
+            </template>
+            </ul>
+          </li>
+          </template>
+        </ul>
+      </div>
+      <div id="items" class="flex">
+        <div style="background-color: rgba(255,255,255,.1); width: {{ timelineInnerWidth }}px;">
+          <content select="webui-timeline-item"></content>
+        </div>
+      </div>
+    </div>
   </template>
   <script type="application/dart" src="webui-timeline.dart"></script>
 </polymer-element>
