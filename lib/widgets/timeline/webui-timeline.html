@@ -39,11 +39,13 @@
           <template repeat="{{ item in children | filterChildren }}">
           <li>
             {{ item.name }}
+            <!--
             <ul class="list">
             <template repeat="{{ val in item.properties.keys }}">
               <li>{{ val }}</li>
             </template>
             </ul>
+            -->
           </li>
           </template>
         </ul>
