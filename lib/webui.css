@@ -21,6 +21,10 @@ webui-layout /deep/ ul.list {
   list-style-image: none;
 }
 
+webui-layout /deep/ ul.hlist > li {
+  float: left;
+}
+
 /*
 webui-layout /deep/ *[horizontal] {
   flex-direction: column;

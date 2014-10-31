@@ -7,7 +7,7 @@ import 'webui-timeline-keyframe.dart';
 class WebUiTimelineItem extends PolymerElement {
   @published String name;
   
-  @published ObservableMap properties;
+  @published Map properties;
   
   WebUiTimelineItem.created() : super.created() {
     /*onPropertyChange(this, #properties, () {
