@@ -14,6 +14,10 @@ class WebUiTimelineKeyFrame extends PolymerElement {
       _setPosition();
     });
     
+    onPropertyChange(this, #max, () {
+      _setPosition();
+    });
+    
     onClick.listen((MouseEvent ev) {
       ev.preventDefault();
       ev.stopPropagation();
@@ -22,7 +26,7 @@ class WebUiTimelineKeyFrame extends PolymerElement {
   }
   
   void _setPosition() {
-    style.left = (frame/max*100).toString() + '%';
+    //style.left = (frame/max*100).toString() + '%';
   }
   
   void domReady() {

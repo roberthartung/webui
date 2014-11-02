@@ -1,8 +1,15 @@
 <!DOCTYPE html>
 <link rel="import" href="../../../../packages/polymer/polymer.html">
+<!--<link rel="import" href="../../../../packages/core_elements/core_style.html">-->
 
-<polymer-element name="webui-timeline-keyframe">
+<polymer-element name="webui-timeline-keyframe" attributes="max frame">
   <template>
+    <!--<core-style id="webui-timeline-keyframe">
+      :host {
+        backgound-color: steelblue;
+      }
+    </core-style>
+    -->
     <style>
       :host {
         display: block;
@@ -10,6 +17,7 @@
         width: 10px;
         margin-left: -5px;
         position: absolute;
+        left: {{frame/max*100.0)}}%;
       }
     </style>
     <content>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <link rel="import" href="../../../../packages/polymer/polymer.html">
 
-<polymer-element name="webui-timeline" class="flex">
+<polymer-element name="webui-timeline" class="flex" attributes="max zoom cursor">
   <template>
     <style>
       :host {
@@ -25,22 +25,37 @@
         flex-grow: 1;
         flex-shrink: 1;
         overflow: scroll;
-        display: block;
       }
       
       #controls {
         
       }
+      
+      #cursor {
+        border-left: 1px solid #f00;
+        flex-grow: 1;
+        width: 1px;
+      }
+      
+      #items-names li + li {
+        border-top: 1px solid #ccc; 
+      }
+      
+      #items-names a {
+        text-decoration: none;
+        display: block;
+        padding: 5px;
+      }
     </style>
     <div id="controls">
-      <input type="range" min="1" max="1000" value="{{ zoom }}">
+      <input type="range" min="1" max="1000" value="{{zoom}}">
     </div>
     <div id="timeline" class="flex">
       <div id="list">
-        <ul class="list">
+        <ul class="list" id="items-names">
           <template repeat="{{ item in children | filterChildren }}">
           <li>
-            {{ item.name }}
+            <a href="#">{{item.name}}</a>
             <!--
             <ul class="list">
             <template repeat="{{ val in item.properties.keys }}">
@@ -53,7 +68,8 @@
         </ul>
       </div>
       <div id="items" class="flex">
-        <div style="background-color: rgba(255,255,255,.1); width: {{ timelineInnerWidth }}px;">
+        <div style="background-color: rgba(255,255,255,.1); width: {{ stringToInt(zoom) * max }}px; position: relative; flex-shrink: 0; min-width: min-content;">
+          <div id="cursor" style="position: absolute; top: 0; bottom: 0; left: {{cursor/max*100.0}}%; height: 100%;"></div>
           <content select="webui-timeline-item"></content>
         </div>
       </div>
