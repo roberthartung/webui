@@ -7,6 +7,8 @@ import 'webui-timeline-keyframe.dart';
 class WebUiTimelineItem extends PolymerElement {
   @published String name;
   
+  @published var model;
+  
   @published Map properties;
   
   WebUiTimelineItem.created() : super.created() {
@@ -28,5 +30,9 @@ class WebUiTimelineItem extends PolymerElement {
   
   List filterChildren(List list) {
     return list.where((item) => item is WebUiTimelineKeyFrame).toList();
+  }
+  
+  void domReady() {
+    super.domReady();
   }
 }

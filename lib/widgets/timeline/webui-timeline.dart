@@ -35,7 +35,8 @@ class WebUiTimeline extends WebUiPanel {
     });
     */
     on['keyframe-clicked'].listen((CustomEvent ev) {
-      print(ev.detail);
+      // print(ev.detail);
+      // TODO(rh) add actions
     });
   }
   
@@ -80,6 +81,19 @@ class WebUiTimeline extends WebUiPanel {
       
       fire('webui-timeline-drop', detail: {'draggedNode': tb.nodeBind(_dragTarget).templateInstance.model.value as WebUiTimelineItem, 'dropTarget': tb.nodeBind(ev.target).templateInstance.model.value as WebUiTimelineItem});
       return false;
+    });
+  }
+  
+  @override
+  void domReady() {
+    super.domReady();
+    
+    $['list'].onScroll.listen((Event ev) {
+      $['items'].scrollTop = $['list'].scrollTop;
+    });
+    
+    $['items'].onScroll.listen((Event ev) {
+      $['list'].scrollTop = $['items'].scrollTop;
     });
   }
 }

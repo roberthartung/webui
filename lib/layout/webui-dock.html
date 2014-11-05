@@ -14,6 +14,7 @@
 
     <!-- tabbed view -->
     <template if="{{tabbed}}">
+      <content select=".before-tabs"></content>
       <webui-tabs id="tabs">
         <template repeat="{{ widget in widgets | enumerate }}">
           <webui-tabs-item label="{{ widget.value.label }}">
@@ -21,6 +22,7 @@
           </webui-tabs-item>
         </template>
       </webui-tabs>
+      <content select=".after-tabs"></content>
     </template>
     <template if="{{!tabbed}}">
       <content></content>

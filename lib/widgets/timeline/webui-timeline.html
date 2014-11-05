@@ -48,7 +48,7 @@
       }
     </style>
     <div id="controls">
-      <input type="range" min="1" max="1000" value="{{zoom}}">
+      <input type="range" min="1" max="100" value="{{zoom}}">
       <content select=".controls"></content>
     </div>
     <div id="timeline" class="flex">
@@ -57,6 +57,10 @@
           <template repeat="{{ item in children | filterChildren }}">
           <li>
             <a href="#">{{item.name}}</a>
+            <input type="text" value="{{item.name}}">
+            
+            <a href="#">{{item.model.name}}</a>
+            <input type="text" value="{{item.model.name}}">
             <!--
             <ul class="list">
             <template repeat="{{ val in item.properties.keys }}">

@@ -12,7 +12,7 @@ class WebUiDock extends PolymerElement with NthChildSelector {
   
   //@ComputedProperty('filterChildren(children)')
   //get widgets => readValue(#widgets);
-  get widgets => children.where((e) => (!(e is TemplateElement))).toList();
+  get widgets => children.where((e) => (!(e is TemplateElement) && e is Element && (!e.classes.contains('before-tabs'))&& (!e.classes.contains('after-tabs')))).toList();
   
   MutationObserver _observer;
   
