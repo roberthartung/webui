@@ -21,7 +21,7 @@ class WebUiTimelineKeyFrame extends PolymerElement {
     onClick.listen((MouseEvent ev) {
       ev.preventDefault();
       ev.stopPropagation();
-      fire('keyframe-clicked', detail: {'keyframe': this});
+      fire('keyframe-clicked', detail: {'keyframe': this, 'event': ev});
     });
   }
   

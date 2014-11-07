@@ -4,6 +4,7 @@ import 'package:polymer/polymer.dart';
 import '../panel/webui-panel.dart';
 import 'webui-timeline-item.dart';
 import 'dart:html';
+import 'dart:async';
 import 'package:template_binding/template_binding.dart' as tb;
 
 @CustomTag('webui-timeline')
@@ -35,7 +36,12 @@ class WebUiTimeline extends WebUiPanel {
     });
     */
     on['keyframe-clicked'].listen((CustomEvent ev) {
-      // print(ev.detail);
+      int frame = ev.detail['keyframe'].frame;
+      cursor = frame;
+      Observable.dirtyCheck();
+      deliverChanges();
+      notifyPropertyChange(#cursor, null, cursor);
+      print('set cursor: $frame');
       // TODO(rh) add actions
     });
   }
@@ -94,6 +100,23 @@ class WebUiTimeline extends WebUiPanel {
     
     $['items'].onScroll.listen((Event ev) {
       $['list'].scrollTop = $['items'].scrollTop;
+    });
+    
+    $['cursor'].onMouseDown.listen((MouseEvent ev) {
+      Point start = ev.page;
+      int left = $['cursor'].offsetLeft;
+      
+      StreamSubscription stream = document.onMouseMove.listen((MouseEvent ev) {
+        Point delta = ev.page - start;
+        // $['cursor'].style.left = '${delta}px';
+        cursor = left + delta.x;
+        //p = ev.page;
+      });
+      
+      document.onMouseUp.first.then((MouseEvent ev) {
+        stream.cancel();
+        start = null;
+      });
     });
   }
 }

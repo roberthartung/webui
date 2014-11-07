@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<link rel="import" href="../../../packages/polymer/polymer.html">
+
+<polymer-element name="webui-property-wrapper" attributes="label property model type">
+  <template> 
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <content></content>
+    
+    <div>{{label}}</div>
+    <div>
+      <template if="{{type=='slider'}}">
+        <input type="range" value="{{value}}">
+      </template>
+      <template if="{{type=='int'}}">
+        <input type="number" value="{{value}}">
+      </template>
+      </div>
+  </template>
+  
+  <script type="application/dart" src="webui-property-wrapper.dart"></script>
+</polymer-element>
