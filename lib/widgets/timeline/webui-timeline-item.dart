@@ -9,7 +9,7 @@ class WebUiTimelineItem extends PolymerElement {
   
   @published var model;
   
-  @published Map properties;
+  @published Object properties;
   
   WebUiTimelineItem.created() : super.created() {
     /*onPropertyChange(this, #properties, () {

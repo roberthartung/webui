@@ -12,10 +12,16 @@ class WebUiPropertyWrapper extends PolymerElement {
   
   @published String type = "int";
   
+  @published String min = "";
+  
+  @published String step = "";
+  
+  @published String max = "";
+  
   @published bool slider = false;
   
   @reflectable
-  get value => model[property];
+  get value => model[property] == null ? "" : model[property].toString();
   
   @reflectable
   set value(v) => model[property] = v; 

@@ -8,9 +8,28 @@
         display: block;
         flex-grow: 1;
       }
+      
+      #label {
+        font-weight: bold;
+        background: #646464;
+        background: -moz-linear-gradient(top,  #646464 0%, #454545 100%);
+        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#646464), color-stop(100%,#454545));
+        background: -webkit-linear-gradient(top,  #646464 0%,#454545 100%);
+        background: -o-linear-gradient(top,  #646464 0%,#454545 100%);
+        background: -ms-linear-gradient(top,  #646464 0%,#454545 100%);
+        background: linear-gradient(to bottom,  #646464 0%,#454545 100%);
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#646464', endColorstr='#454545',GradientType=0 );
+        padding: 5px;
+      }
+      
+      #items {
+        padding: 5px;
+      }
     </style>
     <div id="label">{{label}}</div>
-    <content></content>
+    <div id="items">
+      <content></content>
+    </div>
   </template>
   <script type="application/dart" src="webui-accordion-item.dart"></script>
 </polymer-element>

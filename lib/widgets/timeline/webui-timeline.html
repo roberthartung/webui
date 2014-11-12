@@ -47,9 +47,14 @@
         display: block;
         padding: 5px;
       }
+      
+      #items content::content * /deep/ webui-timeline-keyframe {
+        width: {{zoom}}px;
+        /*margin-left: {{keyframeLeft(zoom)}}px;*/
+      }
     </style>
     <div id="controls">
-      <input type="range" min="1" max="100" value="{{zoom}}">
+      <input type="range" min="10" max="100" value="{{zoom}}">
       <content select=".controls"></content>
     </div>
     <div id="timeline" class="flex">
@@ -58,20 +63,20 @@
           <template repeat="{{ item in children | filterChildren }}">
           <li>
             <a href="#">{{item.name}}</a>
-            <!--
+            
             <ul class="list">
-            <template repeat="{{ val in item.properties.keys }}">
-              <li>{{ val }}</li>
+            <template repeat="{{ property in item.properties.keys }}">
+              <li>{{ property }}</li>
             </template>
             </ul>
-            -->
+            
           </li>
           </template>
         </ul>
       </div>
-      <div id="items" class="flex">
+      <div id="items" class="flex" style="background-image: url({{background}});">
         <div style="background-color: rgba(255,255,255,.1); width: {{ stringToInt(zoom) * max }}px; position: relative; flex-shrink: 0; min-width: min-content;">
-          <div id="cursor" style="position: absolute; top: 0; bottom: 0; left: {{cursor/max*100.0}}%; height: 100%;"></div>
+          <div id="cursor" style="position: absolute; top: 0; bottom: 0; left: {{cursorPosition}}px; height: 100%;"></div>
           <content select="webui-timeline-item"></content>
         </div>
       </div>

@@ -9,7 +9,7 @@ import 'package:template_binding/template_binding.dart' as tb;
 
 @CustomTag('webui-timeline')
 class WebUiTimeline extends WebUiPanel {
-  @published String zoom = "1";
+  @published String zoom = "10";
   
   @published int max = 0;
   
@@ -21,11 +21,27 @@ class WebUiTimeline extends WebUiPanel {
   @ComputedProperty('zoom*max')
   int get timelineInnerWidth => max * getZoom;
   
+  @ComputedProperty('cursor*getZoom')
+  int get cursorPosition => getZoom * cursor;
+  
   MutationObserver _observer;
+  
+  @observable String background;
     
   WebUiTimeline.created() : super.created() {
     _observer = new MutationObserver(_onMutation);
     _observer.observe(this, childList: true, attributes: true, subtree: true);
+    onPropertyChange(this, #zoom, () {
+      CanvasElement canvas = new CanvasElement(width: int.parse(zoom), height: 1);
+      CanvasRenderingContext2D ctx = canvas.getContext('2d');
+      ctx.strokeStyle = 'white';
+      ctx.beginPath();
+      ctx.moveTo(int.parse(zoom)-.5, 0);
+      ctx.lineTo(int.parse(zoom)-.5, 1);
+      ctx.closePath();
+      ctx.stroke();
+      background = canvas.toDataUrl();
+    });
     /*
     onPropertyChange(this, #zoom, () {
       notifyPropertyChange(#getZoom, null, zoom);
@@ -109,7 +125,8 @@ class WebUiTimeline extends WebUiPanel {
       StreamSubscription stream = document.onMouseMove.listen((MouseEvent ev) {
         Point delta = ev.page - start;
         // $['cursor'].style.left = '${delta}px';
-        cursor = left + delta.x;
+        // TODO(rh) cursor should never be < 1!
+        cursor = (left + delta.x) ~/ getZoom;
         //p = ev.page;
       });
       
@@ -118,5 +135,9 @@ class WebUiTimeline extends WebUiPanel {
         start = null;
       });
     });
+  }
+  
+  double keyframeLeft(String zoom) {
+    return int.parse(zoom) / -2.0;
   }
 }

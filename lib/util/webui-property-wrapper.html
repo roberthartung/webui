@@ -6,17 +6,50 @@
     <style>
       :host {
         display: block;
+        overflow: hidden;
+      }
+      
+      #label {
+        display: inline-block;
+        vertical-align: middle;
+        margin-right: 5px;
+        color: #ccc;
+        text-align: right;
+      }
+      
+      #value {
+        vertical-align: middle;
+        display: inline-block;
+      }
+      
+      #value input {
+        background: none;
+        background-color: transparent;
+        border: none;
+        color: #fff;
+        padding: 0;
+        height: 20px;
+      }
+      
+      #value input:focus {
+        outline:none;
       }
     </style>
     <content></content>
     
-    <div>{{label}}</div>
-    <div>
+    <div id="label" style="width: 30%;">{{label}}</div>
+    <div id="value">
       <template if="{{type=='slider'}}">
-        <input type="range" value="{{value}}">
+        <input type="range" value="{{value}}" min="{{min}}" step="{{step}}" max="{{max}}">
       </template>
-      <template if="{{type=='int'}}">
-        <input type="number" value="{{value}}">
+      <template if="{{type=='number'}}">
+        <input type="number" value="{{value}}" min="{{min}}" step="{{step}}" max="{{max}}">
+      </template>
+      <template if="{{type=='text'}}">
+        <input type="text" value="{{value}}">
+      </template>
+      <template if="{{type=='color'}}">
+        <input type="text" value="{{value}}"> <input type="color" value="{{value}}">
       </template>
       </div>
   </template>

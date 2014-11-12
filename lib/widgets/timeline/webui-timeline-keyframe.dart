@@ -9,6 +9,10 @@ class WebUiTimelineKeyFrame extends PolymerElement {
   
   @published int max;
   
+  @published ObservableMap properties;
+  
+  @published Object globalproperties;
+  
   WebUiTimelineKeyFrame.created() : super.created() {
     onPropertyChange(this, #frame, () {
       _setPosition();

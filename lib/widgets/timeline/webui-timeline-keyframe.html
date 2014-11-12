@@ -2,7 +2,7 @@
 <link rel="import" href="../../../../packages/polymer/polymer.html">
 <!--<link rel="import" href="../../../../packages/core_elements/core_style.html">-->
 
-<polymer-element name="webui-timeline-keyframe" attributes="max frame">
+<polymer-element name="webui-timeline-keyframe" attributes="max frame properties">
   <template>
     <!--<core-style id="webui-timeline-keyframe">
       :host {
@@ -14,15 +14,33 @@
       :host {
         cursor: pointer;
         display: block;
-        flex-grow: 1;
-        width: 10px;
-        margin-left: -5px;
+        /*flex-grow: 1;*/
+        /*min-width: 10px;*/
+        /*margin-left: -5px;*/
         position: absolute;
-        left: {{frame/max*100.0)}}%;
+        left: {{(frame-1)/max*100.0)}}%;
+        text-align: center;
+      }
+      
+      .property {
+        height: 15px;
       }
     </style>
-    <content>
-    </content>
+    
+    <content></content>
+    
+    <template repeat="{{ prop in globalproperties }}">
+      <div class="property">
+      <template if="{{properties[prop]!=null}}">
+        {{ properties[prop] }}
+      </template>
+      </div>
+    </template>
+    <!--
+    <template repeat="{{ prop in properties.keys }}">
+      {{prop}} = {{properties[prop]}}
+    </template>
+    -->
   </template>
   <script type="application/dart" src="webui-timeline-keyframe.dart"></script>
 </polymer-element>
