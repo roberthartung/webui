@@ -15,6 +15,8 @@ class WebUiTimeline extends WebUiPanel {
   
   @published int cursor = 0;
   
+  @published int fps = 60;
+  
   @ComputedProperty('zoom')
   int get getZoom => int.parse(zoom);
   
@@ -27,21 +29,13 @@ class WebUiTimeline extends WebUiPanel {
   MutationObserver _observer;
   
   @observable String background;
+  
+  @observable String backgroundHeader;
     
   WebUiTimeline.created() : super.created() {
     _observer = new MutationObserver(_onMutation);
     _observer.observe(this, childList: true, attributes: true, subtree: true);
-    onPropertyChange(this, #zoom, () {
-      CanvasElement canvas = new CanvasElement(width: int.parse(zoom), height: 1);
-      CanvasRenderingContext2D ctx = canvas.getContext('2d');
-      ctx.strokeStyle = 'white';
-      ctx.beginPath();
-      ctx.moveTo(int.parse(zoom)-.5, 0);
-      ctx.lineTo(int.parse(zoom)-.5, 1);
-      ctx.closePath();
-      ctx.stroke();
-      background = canvas.toDataUrl();
-    });
+    onPropertyChange(this, #zoom, _setTimelineBackground);
     /*
     onPropertyChange(this, #zoom, () {
       notifyPropertyChange(#getZoom, null, zoom);
@@ -62,6 +56,44 @@ class WebUiTimeline extends WebUiPanel {
     });
   }
   
+  _setTimelineBackground() {
+    int z = int.parse(zoom);
+    CanvasElement canvas = new CanvasElement(width: z*5, height: 1);
+    CanvasRenderingContext2D ctx = canvas.getContext('2d');
+    
+    ctx.fillStyle = '#999';
+    ctx.fillRect(0, 0, z, 1);
+    
+    ctx.strokeStyle = '#333';
+    for(int i=0;i<5;i++) {
+      ctx.beginPath();
+      double x = i*z+z-.5;
+      ctx.moveTo(x, 0);
+      ctx.lineTo(x, 1);
+      ctx.closePath();
+      ctx.stroke();
+    }
+    
+    background = canvas.toDataUrl();
+    
+    CanvasElement canvasHeader = new CanvasElement(width: z*5, height:1);
+    CanvasRenderingContext2D ctxHeader = canvasHeader.getContext('2d');
+    ctxHeader.fillStyle = '#444';
+    ctxHeader.fillRect(0, 0, z, 1);
+        
+    ctxHeader.strokeStyle = '#222';
+    for(int i=0;i<5;i++) {
+      ctxHeader.beginPath();
+      double x = i*z+z-.5;
+      ctxHeader.moveTo(x, 0);
+      ctxHeader.lineTo(x, 1);
+      ctxHeader.closePath();
+      ctxHeader.stroke();
+    }
+    
+    backgroundHeader = canvasHeader.toDataUrl();
+  }
+  
   _onMutation(List<MutationRecord> changes, MutationObserver) {
     changes.forEach((MutationRecord change) {
       notifyPropertyChange(#children, null, children);
@@ -70,6 +102,17 @@ class WebUiTimeline extends WebUiPanel {
   
   filterChildren(list) {
     return list.where((e) => e is WebUiTimelineItem).toList();
+  }
+  
+  timelineIterator(m) {
+    double endTime = m / fps;
+    List times = [];
+    double time = 0.0;
+    while(time < endTime) {
+      times.add((time*100.0).floor()/100.0);
+      time += (5/fps);
+    }
+    return times;
   }
   
   int stringToInt(s) => int.parse(s);
@@ -116,6 +159,7 @@ class WebUiTimeline extends WebUiPanel {
     
     $['items'].onScroll.listen((Event ev) {
       $['list'].scrollTop = $['items'].scrollTop;
+      $['header'].scrollLeft = $['items'].scrollLeft;
     });
     
     $['cursor'].onMouseDown.listen((MouseEvent ev) {
@@ -135,6 +179,8 @@ class WebUiTimeline extends WebUiPanel {
         start = null;
       });
     });
+    
+    _setTimelineBackground();
   }
   
   double keyframeLeft(String zoom) {

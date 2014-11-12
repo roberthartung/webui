@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <link rel="import" href="../../../../packages/polymer/polymer.html">
 
-<polymer-element name="webui-timeline" class="flex" attributes="max zoom cursor">
+<polymer-element name="webui-timeline" class="flex" attributes="max zoom cursor fps">
   <template>
     <style>
       :host {
@@ -9,26 +9,38 @@
         flex-direction: column;
       }
       
-      #timeline {
+      #timeline, #controls {
         flex-grow: 1;
         flex-direction: row;
       }
       
-      #list {
+      .left {
         width: 200px;
         flex-grow: 0;
         flex-shrink: 0;
+      }
+      
+      .right {
+        flex-grow: 1;
+        flex-shrink: 1;
+      }
+      
+      #timeline .left, #timeline .right {
         overflow: scroll;
+      }
+      
+      #header-inner {
+        height: 25px;
       }
       
       #items {
-        flex-grow: 1;
-        flex-shrink: 1;
-        overflow: scroll;
+        color: black;
       }
       
       #controls {
-        
+        height: 20px;
+        flex-grow: 0;
+        flex-shrink: 0;
       }
       
       #cursor {
@@ -52,30 +64,45 @@
         width: {{zoom}}px;
         /*margin-left: {{keyframeLeft(zoom)}}px;*/
       }
+      
+      .time {
+        width: {{stringToInt(zoom)*5}}px;
+        display: inline-block;
+        float: left;
+      }
     </style>
-    <div id="controls">
-      <input type="range" min="10" max="100" value="{{zoom}}">
-      <content select=".controls"></content>
+    <div class="flex" id="controls">
+      <div class="left">
+        <input type="range" min="5" max="100" value="{{zoom}}">
+        <content select=".controls"></content>
+      </div>
+      <div id="header" class="header right" style="overflow: hidden;">
+        <div id="header-inner" style="width: {{ stringToInt(zoom) * max }}px;  background-image: url({{backgroundHeader}});">
+          <template repeat="{{ time in max | timelineIterator }}">
+            <div class="time">{{time}}</div>
+          </template>
+        </div>
+      </div>
     </div>
     <div id="timeline" class="flex">
-      <div id="list">
+      <div id="list" class="left">
         <ul class="list" id="items-names">
           <template repeat="{{ item in children | filterChildren }}">
           <li>
             <a href="#">{{item.name}}</a>
-            
+            <!--
             <ul class="list">
             <template repeat="{{ property in item.properties.keys }}">
-              <li>{{ property }}</li>
+              <li>{{property}}</li>
             </template>
             </ul>
-            
+            -->
           </li>
           </template>
         </ul>
       </div>
-      <div id="items" class="flex" style="background-image: url({{background}});">
-        <div style="background-color: rgba(255,255,255,.1); width: {{ stringToInt(zoom) * max }}px; position: relative; flex-shrink: 0; min-width: min-content;">
+      <div id="items" class="flex right">
+        <div style="background-color: #ccc; background-image: url({{background}}); width: {{ stringToInt(zoom) * max }}px; position: relative; flex-shrink: 0; min-width: min-content;">
           <div id="cursor" style="position: absolute; top: 0; bottom: 0; left: {{cursorPosition}}px; height: 100%;"></div>
           <content select="webui-timeline-item"></content>
         </div>
