@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<link rel="import" href="../../../../packages/polymer/polymer.html">
+
+<polymer-element name="webui-contextmenu">
+  <template>
+    <style>
+      :host {
+        display: none;
+        position: fixed;
+        z-index: 10000;
+        top: 0;
+        left: 0;
+      }
+    </style>
+    <content select="webui-contextmenu-item"></content>
+  </template>
+  <script type="application/dart" src="webui-contextmenu.dart"></script>
+</polymer-element>

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <link rel="import" href="../../../../packages/polymer/polymer.html">
+<link rel="import" href="../contextmenu.html">
 
 <polymer-element name="webui-timeline" class="flex" attributes="max zoom cursor fps">
   <template>
@@ -50,14 +51,16 @@
         cursor: w-resize;
       }
       
-      #items-names li + li {
-        border-top: 1px solid #ccc; 
+      #items-names li {
+        border-bottom: 1px solid #ccc; 
       }
       
       #items-names a {
         text-decoration: none;
         display: block;
-        padding: 5px;
+        padding: 3px;
+        height: 20px;
+        box-sizing: border-box;
       }
       
       #items content::content * /deep/ webui-timeline-keyframe {
@@ -71,6 +74,13 @@
         float: left;
       }
     </style>
+    
+    <!-- ContextMenu -->
+    <webui-contextmenu id="contextmenu">
+    <webui-contextmenu-item id="contextmenu-keyframe-add" disabled=false>Add Keyframe</webui-contextmenu-item>
+      <webui-contextmenu-item id="contextmenu-keyframe-remove" disabled=true>Remove Keyframe</webui-contextmenu-item>
+    </webui-contextmenu>
+    
     <div class="flex" id="controls">
       <div class="left">
         <input type="range" min="5" max="100" value="{{zoom}}">

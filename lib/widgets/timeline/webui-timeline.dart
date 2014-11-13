@@ -2,7 +2,10 @@ library webui.widgets.timeline;
 
 import 'package:polymer/polymer.dart';
 import '../panel/webui-panel.dart';
+import '../contextmenu/webui-contextmenu.dart';
+import '../contextmenu/webui-contextmenu-item.dart';
 import 'webui-timeline-item.dart';
+import 'webui-timeline-keyframe.dart';
 import 'dart:html';
 import 'dart:async';
 import 'package:template_binding/template_binding.dart' as tb;
@@ -23,38 +26,48 @@ class WebUiTimeline extends WebUiPanel {
   @ComputedProperty('zoom*max')
   int get timelineInnerWidth => max * getZoom;
   
-  @ComputedProperty('cursor*getZoom')
-  int get cursorPosition => getZoom * cursor;
+  @ComputedProperty('(cursor)*getZoom - getZoom~/2')
+  int get cursorPosition => getZoom * cursor - getZoom~/2;
   
   MutationObserver _observer;
   
   @observable String background;
   
   @observable String backgroundHeader;
+  
+  int stringToInt(s) => int.parse(s);
     
+  var _dragTarget = null;
+  
+  /**
+   * Created Constructor
+   */
+  
   WebUiTimeline.created() : super.created() {
     _observer = new MutationObserver(_onMutation);
     _observer.observe(this, childList: true, attributes: true, subtree: true);
     onPropertyChange(this, #zoom, _setTimelineBackground);
-    /*
-    onPropertyChange(this, #zoom, () {
-      notifyPropertyChange(#getZoom, null, zoom);
-    });
-     
-    onPropertyChange(this, #max, () {
-      notifyPropertyChange(#getZoom, null, zoom);
-    });
-    */
-    on['keyframe-clicked'].listen((CustomEvent ev) {
-      int frame = ev.detail['keyframe'].frame;
-      cursor = frame;
-      Observable.dirtyCheck();
-      deliverChanges();
-      notifyPropertyChange(#cursor, null, cursor);
-      print('set cursor: $frame');
-      // TODO(rh) add actions
-    });
+
+    on['keyframe-clicked'].listen(_onKeyFrameClicked);
   }
+  
+  /**
+   * Called when the user clicks on a keyframe
+   */
+  
+  _onKeyFrameClicked(CustomEvent ev) {
+    int frame = ev.detail['keyframe'].frame;
+    cursor = frame;
+    Observable.dirtyCheck();
+    deliverChanges();
+    notifyPropertyChange(#cursor, null, cursor);
+    print('set cursor: $frame');
+    // TODO(rh) add actions
+  }
+  
+  /**
+   * Sets the background for the timeline
+   */
   
   _setTimelineBackground() {
     int z = int.parse(zoom);
@@ -115,9 +128,9 @@ class WebUiTimeline extends WebUiPanel {
     return times;
   }
   
-  int stringToInt(s) => int.parse(s);
-  
-  var _dragTarget = null;
+  /**
+   * ##### Called when the element gets attached to the DOM
+   */
   
   void attached() {
     super.attached();
@@ -147,7 +160,32 @@ class WebUiTimeline extends WebUiPanel {
       fire('webui-timeline-drop', detail: {'draggedNode': tb.nodeBind(_dragTarget).templateInstance.model.value as WebUiTimelineItem, 'dropTarget': tb.nodeBind(ev.target).templateInstance.model.value as WebUiTimelineItem});
       return false;
     });
+    
+    $['items'].onContextMenu.listen((MouseEvent e) {
+      e.preventDefault();
+      var items = e.path.where((e) => e is WebUiTimelineItem);
+      if(items.length > 0) {
+        Point offset = $['items'].offsetTo(document.body);
+        Point diff = e.page - offset;
+        num frame = ((diff.x + $['items'].scrollLeft) / getZoom).ceil();
+        
+        if(e.path.any((e) => e is WebUiTimelineKeyFrame)) {
+          ($['contextmenu-keyframe-add'] as WebUiContextMenuItem).attributes['disabled'] = 'true';
+          ($['contextmenu-keyframe-remove'] as WebUiContextMenuItem).attributes['disabled'] = 'false';
+        } else {
+          ($['contextmenu-keyframe-add'] as WebUiContextMenuItem).attributes['disabled'] = 'false';
+          ($['contextmenu-keyframe-remove'] as WebUiContextMenuItem).attributes['disabled'] = 'true';
+        }
+        
+        ($['contextmenu'] as WebUiContextMenu).show(e.page, {'frame':frame, 'timeline-item': items.first});
+        // fire('webui-contextmenu', detail: );
+      }
+    });
   }
+  
+  /**
+   * ##### Called when the dom is ready
+   */
   
   @override
   void domReady() {

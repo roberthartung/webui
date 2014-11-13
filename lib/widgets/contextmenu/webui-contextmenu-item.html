@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<link rel="import" href="../../../../packages/polymer/polymer.html">
+
+<polymer-element name="webui-contextmenu-item">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+      
+      :host([disabled=true]) {
+        cursor: default;
+      }
+      
+      :host([disabled=false]) {
+        cursor: pointer;
+      }
+    </style>
+    <content></content>
+  </template>
+  <script type="application/dart" src="webui-contextmenu-item.dart"></script>
+</polymer-element>
