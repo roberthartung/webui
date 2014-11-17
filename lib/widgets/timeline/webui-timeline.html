@@ -59,8 +59,20 @@
         text-decoration: none;
         display: block;
         padding: 3px;
-        height: 20px;
+        height: 21px;
+        border-bottom: 1px solid #666;
         box-sizing: border-box;
+      }
+      
+      #items-names ul.properties {
+        
+      }
+      
+      #items-names ul.properties li {
+        height: 21px;
+        padding: 3px;
+        box-sizing: border-box;
+        text-align: right;
       }
       
       #items content::content * /deep/ webui-timeline-keyframe {
@@ -99,22 +111,27 @@
         <ul class="list" id="items-names">
           <template repeat="{{ item in children | filterChildren }}">
           <li>
-            <a href="#">{{item.name}}</a>
-            <!--
-            <ul class="list">
-            <template repeat="{{ property in item.properties.keys }}">
-              <li>{{property}}</li>
+            <a class="item-name" href="#collapse" on-click="{{toggleItem}}">
+              <template if="{{item.collapsed}}"><i class="fa fa-caret-right"></i></template>
+              <template if="{{!item.collapsed}}"><i class="fa fa-caret-down"></i></template>
+              {{item.name}}
+            </a>
+            <template if="{{!item.collapsed}}">
+              <ul class="list properties">
+              <template repeat="{{ property in item.properties.keys }}">
+                <li>{{property}}</li>
+              </template>
+              </ul>
             </template>
-            </ul>
-            -->
           </li>
           </template>
         </ul>
       </div>
       <div id="items" class="flex right">
         <div style="background-color: #ccc; background-image: url({{background}}); width: {{ stringToInt(zoom) * max }}px; position: relative; flex-shrink: 0; min-width: min-content;">
-          <div id="cursor" style="position: absolute; top: 0; bottom: 0; left: {{cursorPosition}}px; height: 100%;"></div>
+          <div id="cursor" style="position: absolute; top: 0; bottom: 0; left: {{cursorPosition}}px;"></div>
           <content select="webui-timeline-item"></content>
+          <br style="clear: both;">
         </div>
       </div>
     </div>

@@ -15,6 +15,7 @@
         margin-right: 5px;
         color: #ccc;
         text-align: right;
+        width: 30%;
       }
       
       #value {
@@ -37,7 +38,7 @@
     </style>
     <content></content>
     
-    <div id="label" style="width: 30%;">{{label}}</div>
+    <div id="label">{{label}}</div>
     <div id="value">
       <template if="{{type=='slider'}}">
         <input type="range" value="{{value}}" min="{{min}}" step="{{step}}" max="{{max}}">

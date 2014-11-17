@@ -30,7 +30,7 @@ class WebUiDock extends PolymerElement with NthChildSelector {
       notifyPropertyChange(#widgets, null, children);
     });
     // Observable.dirtyCheck
-     
+    
     removeClasses(children);
     addClasses(children);
     // Might not be needed...

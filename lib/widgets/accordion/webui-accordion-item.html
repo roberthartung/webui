@@ -9,16 +9,22 @@
         flex-grow: 1;
       }
       
-      #label {
+      .label-outer {
+        border-top: 1px solid #2e2e2e;
+        border-bottom: 1px solid #2e2e2e;
+      }
+      
+      .label-inner {
+        border-top: 1px solid #474747;
         font-weight: bold;
-        background: #646464;
-        background: -moz-linear-gradient(top,  #646464 0%, #454545 100%);
-        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#646464), color-stop(100%,#454545));
-        background: -webkit-linear-gradient(top,  #646464 0%,#454545 100%);
-        background: -o-linear-gradient(top,  #646464 0%,#454545 100%);
-        background: -ms-linear-gradient(top,  #646464 0%,#454545 100%);
-        background: linear-gradient(to bottom,  #646464 0%,#454545 100%);
-        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#646464', endColorstr='#454545',GradientType=0 );
+        background: #3b3b3b;
+        background: -moz-linear-gradient(top,  #3b3b3b 0%, #363636 100%);
+        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#3b3b3b), color-stop(100%,#363636));
+        background: -webkit-linear-gradient(top,  #3b3b3b 0%,#363636 100%);
+        background: -o-linear-gradient(top,  #3b3b3b 0%,#363636 100%);
+        background: -ms-linear-gradient(top,  #3b3b3b 0%,#363636 100%);
+        background: linear-gradient(to bottom,  #3b3b3b 0%,#363636 100%);
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#3b3b3b', endColorstr='#363636',GradientType=0 );
         padding: 5px;
       }
       
@@ -26,7 +32,9 @@
         padding: 5px;
       }
     </style>
-    <div id="label">{{label}}</div>
+    <div id="label" class="label-outer">
+      <div class="label-inner">{{label}}</div>
+    </div>
     <div id="items">
       <content></content>
     </div>

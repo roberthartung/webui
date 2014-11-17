@@ -21,12 +21,16 @@ class WebUiTabs extends PolymerElement {
   WebUiTabsItem activeItem = null;
   
   WebUiTabs.created() : super.created() {
+    // print('[Tabs] Widgets: $widgets');
     _observer = new MutationObserver(_onMutation);
     _observer.observe(this, childList: true);
   }
   
   _onMutation(List<MutationRecord> changes, MutationObserver) {
     changes.forEach((MutationRecord change) {
+      if(widgets.length > 0 && activeItem == null) {
+        _setActiveTab(widgets.first);
+      }
       notifyPropertyChange(#widgets, change.oldValue, widgets);
     });
     //deliverChanges();
@@ -39,8 +43,11 @@ class WebUiTabs extends PolymerElement {
          return;
       }
       activeItem.active = false;
+      activeItem.attributes.remove('active');
     }
+    print('[Tabs] _setActiveTab to ${item.label}');
     activeItem = item;
+    activeItem.attributes['active'] = 'true';
     activeItem.active = true;
     _onActiveTabChangedController.add(activeItem);
     fire('active-tab-changed', detail: {'item': activeItem});

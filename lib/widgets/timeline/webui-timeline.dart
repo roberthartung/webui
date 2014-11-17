@@ -47,7 +47,14 @@ class WebUiTimeline extends WebUiPanel {
     _observer = new MutationObserver(_onMutation);
     _observer.observe(this, childList: true, attributes: true, subtree: true);
     onPropertyChange(this, #zoom, _setTimelineBackground);
-
+    onPropertyChange(this, #fps, () {
+      // print('[WebUiTimeline] fps changed: $fps');
+      // Forces a re-render of the timeline
+      notifyPropertyChange(#max, null, max);
+      // deliverChanges();
+      Observable.dirtyCheck();
+    });
+    
     on['keyframe-clicked'].listen(_onKeyFrameClicked);
   }
   
@@ -223,5 +230,12 @@ class WebUiTimeline extends WebUiPanel {
   
   double keyframeLeft(String zoom) {
     return int.parse(zoom) / -2.0;
+  }
+  
+  void toggleItem(event, _, a) {
+    event.preventDefault();
+    
+    WebUiTimelineItem item = tb.nodeBind(a).templateInstance.model.value;
+    item.collapsed = !item.collapsed;
   }
 }

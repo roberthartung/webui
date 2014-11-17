@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<link rel="import" href="../../../../packages/polymer/polymer.html">
+
+<polymer-element name="webui-collapse" attributes="label icon">
+  <template>
+    <style>
+      :host {
+        display: block;
+        flex-grow: 1;
+        margin: 0 1px;
+      }
+      
+      a {
+        text-decoration: none;
+        display: block;
+      }
+      
+      .label-outer {
+        background: #6e6e6e;
+        background: -moz-linear-gradient(top,  #6e6e6e 0%, #474747 100%);
+        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#6e6e6e), color-stop(100%,#474747));
+        background: -webkit-linear-gradient(top,  #6e6e6e 0%,#474747 100%);
+        background: -o-linear-gradient(top,  #6e6e6e 0%,#474747 100%);
+        background: -ms-linear-gradient(top,  #6e6e6e 0%,#474747 100%);
+        background: linear-gradient(to bottom,  #6e6e6e 0%,#474747 100%);
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#6e6e6e', endColorstr='#474747',GradientType=0 );
+        padding: 1px 1px 0 1px;
+        border-bottom: 1px solid #262626;
+      }
+      
+      .label-inner {
+        background: #5c5c5c;
+        background: -moz-linear-gradient(top,  #5c5c5c 0%, #474747 100%);
+        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#5c5c5c), color-stop(100%,#474747));
+        background: -webkit-linear-gradient(top,  #5c5c5c 0%,#474747 100%);
+        background: -o-linear-gradient(top,  #5c5c5c 0%,#474747 100%);
+        background: -ms-linear-gradient(top,  #5c5c5c 0%,#474747 100%);
+        background: linear-gradient(to bottom,  #5c5c5c 0%,#474747 100%);
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#5c5c5c', endColorstr='#474747',GradientType=0 );
+        padding: 2px;
+      }
+    </style>
+    
+    <div class="label-outer" id="label">
+      <div class="label-inner">
+      <a href="#collapse" on-click="{{toggle}}">
+      <template if="{{collapsed}}"><i class="fa fa-caret-right"></i></template>
+      <template if="{{!collapsed}}"><i class="fa fa-caret-down"></i></template>
+      <template if="{{icon != null}}"><i class="fa {{icon}}"></i></template>
+      {{label}}
+      </a>
+      </div>
+    </div>
+    
+    <template if="{{!collapsed}}">
+      <content></content>
+    </template>
+  </template>
+  <script type="application/dart" src="webui-collapse.dart"></script>
+</polymer-element>

@@ -20,10 +20,11 @@ class WebUiPropertyWrapper extends PolymerElement {
   
   @published bool slider = false;
   
-  @reflectable
+  @ComputedProperty('model[property]')
+  // @observable
   get value => model[property] == null ? "" : model[property].toString();
   
-  @reflectable
+  @observable
   set value(v) => model[property] = v; 
   
   WebUiPropertyWrapper.created() : super.created() {

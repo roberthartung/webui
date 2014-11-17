@@ -21,22 +21,25 @@
         left: {{(frame-1)/max*100.0)}}%;
         text-align: center;
       }
-      
+      /*
       .property {
         height: 15px;
       }
+      */
     </style>
     
     <content></content>
-    <!--
-    <template repeat="{{ prop in globalproperties }}">
-      <div class="property">
-      <template if="{{properties[prop]!=null}}">
-        {{ properties[prop] }}
+    
+    <!--<template if="{{!collapsed}}">
+      <template repeat="{{ prop in globalproperties }}">
+        <div class="property">
+        <template if="{{properties[prop]!=null}}">
+          {{ properties[prop] }}
+        </template>
+        </div>
       </template>
-      </div>
-    </template>
-    -->
+    </template>-->
+    
     <!--
     <template repeat="{{ prop in properties.keys }}">
       {{prop}} = {{properties[prop]}}

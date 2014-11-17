@@ -10,10 +10,31 @@
         flex-shrink: 0;
         z-index: 10000;
       }
+      
+      a {
+        display: block;
+        text-decoration: none;
+      }
+      
+      #icon {
+        float: left;
+        width: 20px;
+      }
+      
+      :host([icon]) /deep/ #text {
+        margin-left: 20px;
+      }
     </style>
-    <a href="#do">{{text}}</a>
+    
+    <div style="overflow: hidden;">
+      <template if="{{icon}}">
+        <div id="icon"><content select=".icon"></content> </div>
+      </template>
+      <div id="text"><a href="#do">{{text}}</a></div>
+    </div>
+    
     <div style="position: absolute;">
-      <content></content>
+      <content select="webui-menu-item"></content>
     </div>
   </template>
   <script type="application/dart" src="webui-menu-item.dart"></script>

@@ -11,11 +11,17 @@ class WebUiTimelineItem extends PolymerElement {
   
   @published Object properties;
   
+  @published bool collapsed = true;
+  
+  @observable ObservableMap spans;
+  
+  @published int max = 0;
+  
   WebUiTimelineItem.created() : super.created() {
     /*onPropertyChange(this, #properties, () {
-      print(properties);
+      // notifyPropertyChange(#animationSpans, null, animationSpans);
     });
-     */
+    */
   }
   
   int maxKeyFrame() {
